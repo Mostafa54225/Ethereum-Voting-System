@@ -22,9 +22,14 @@ const Home = () => {
   const[electionTitle, setElectionTitle] = useState("")
   const[web3, setWeb3] = useState()
   const[electionDetails, setElectionDetails] = useState({elDetails: {adminName: adminName, electionTitle: electionTitle}})
+
   useEffect(() => {
+    if (!window.location.hash) {
+      window.location = window.location + "#loaded";
+      window.location.reload();
+    }
     loadContract()
-  }, [ElectionSC, currentAccount, isAdmin])
+  })
 
   const loadContract = async () => {
     const web3 = await getWeb3()
@@ -36,7 +41,7 @@ const Home = () => {
       const election = new web3.eth.Contract(Electionabi.abi, deployedNetwork.address)
       setElectionSC(election)
       setCurrentAccount(account[0])
-
+      console.log(currentAccount)
       const admin = await election.methods.getAdmin().call()
       if(account[0] === admin) setIsAdmin(true)
         
@@ -106,7 +111,7 @@ const Home = () => {
         <>
           <div className="container-item attention">
             <center>
-              <h3>The Election ended.</h3>
+              <h3 className="text-center">The Election ended.</h3>
               <br />
               <Link
                 to="/Result"

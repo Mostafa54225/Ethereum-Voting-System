@@ -29,34 +29,22 @@ export default class Result extends Component {
     };
   }
   componentDidMount = async () => {
-    // refreshing once
     if (!window.location.hash) {
       window.location = window.location + "#loaded";
       window.location.reload();
     }
     try {
-      // Get network provider and web3 instance.
       const web3 = await getWeb3();
-
-      // Use web3 to get the user's accounts.
       const accounts = await web3.eth.getAccounts();
-
-      // Get the contract instance.
       const networkId = await web3.eth.net.getId();
       const deployedNetwork = Electionabi.networks[networkId];
       const instance = new web3.eth.Contract(Electionabi.abi, deployedNetwork.address)
 
-      // Set web3, accounts, and contract to the state, and then proceed with an
-      // example of interacting with the contract's methods.
       this.setState({ web3, ElectionInstance: instance, account: accounts[0] });
 
-      // Get total number of candidates
-      const candidateCount = await this.state.ElectionInstance.methods
-        .getTotalCandidate()
-        .call();
+      const candidateCount = await this.state.ElectionInstance.methods.getTotalCandidate().call();
       this.setState({ candidateCount: candidateCount });
 
-      // Get start and end values
       const start = await this.state.ElectionInstance.methods.getStart().call();
       this.setState({ isElStarted: start });
       const end = await this.state.ElectionInstance.methods.getEnd().call();
@@ -64,9 +52,7 @@ export default class Result extends Component {
 
       // Loadin Candidates detials
       for (let i = 1; i <= this.state.candidateCount; i++) {
-        const candidate = await this.state.ElectionInstance.methods
-          .candidates(i)
-          .call();
+        const candidate = await this.state.ElectionInstance.methods.candidates(i).call();
         this.state.candidates.push({
           id: candidate.candidateId,
           name: candidate.name,
@@ -82,10 +68,7 @@ export default class Result extends Component {
         this.setState({ isAdmin: true });
       }
     } catch (error) {
-      // Catch any errors for any of the above operations.
-      alert(
-        `Failed to load web3, accounts, or contract. Check console for details.`
-      );
+      alert(`Failed to load web3, accounts, or contract. Check console for details.`);
       console.error(error);
     }
   };

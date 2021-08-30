@@ -19,6 +19,10 @@ const AddCandidate = () => {
   const[candidates, setCandidates] = useState([])
 
   useEffect(() => {
+    if (!window.location.hash) {
+      window.location = window.location + "#loaded";
+      window.location.reload();
+    }
     loadContracts()
   })
   const loadContracts = async () => {
@@ -31,7 +35,6 @@ const AddCandidate = () => {
       const election = new web3.eth.Contract(Electionabi.abi, deployedNetwork.address)
       setElectionSC(election)
       setCurrentAccount(account[0])
-
       const admin = await election.methods.getAdmin().call()
       if(account[0] === admin) setIsAdmin(true)
       const candidateCount = await election.methods.getTotalCandidate().call()
@@ -56,7 +59,7 @@ const AddCandidate = () => {
     .addCandidate(candidateName)
     .send({from: currentAccount})
     .on('transactionhash', () => {console.log("Added Successfully")})
-    
+    window.location.reload()
   }
   if(!web3) {
     return (
@@ -78,7 +81,7 @@ const AddCandidate = () => {
     <div>
       <NavbarAdmin />
       <div className="container-main">
-        <h2>Add a new Candidate</h2>
+        <h2 className="text-center">Add a new Candidate</h2>
         <center>Total Candidates: {candidateCount}</center>
         <div className="container-item">
           <form className="form">
