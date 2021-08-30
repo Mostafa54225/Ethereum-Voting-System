@@ -24,14 +24,7 @@ tr:nth-child(even) {
   margin-bottom: 17px;
   overflow: auto;
 }
-.winner-slogan {
-  padding: 7px 7px 7px 1px;
-  color: #ccab00;
-  font-size: 1.5em;
-  margin: 7px 0px;
-  text-align: justify;
-  overflow: auto;
-}
+
 .winner-info {
   width: 73%;
   max-height: 150px;
