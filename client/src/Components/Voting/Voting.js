@@ -172,7 +172,7 @@ export default class Voting extends Component {
                       <p />
                       <center>
                         <Link
-                          to="/Results"
+                          to="/Result"
                           style={{
                             color: "black",
                             textDecoration: "underline",
@@ -211,11 +211,11 @@ export default class Voting extends Component {
           ) : !this.state.isElStarted && this.state.isElEnded ? (
             <>
               <div className="container-item attention">
+                <center>The Election ended.</center>
                 <center>
-                  <h3>The Election ended.</h3>
                   <br />
                   <Link
-                    to="/Results"
+                    to="/Result"
                     style={{ color: "black", textDecoration: "underline" }}
                   >
                     See results

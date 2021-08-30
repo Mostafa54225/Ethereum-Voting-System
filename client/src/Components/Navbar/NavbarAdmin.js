@@ -13,11 +13,6 @@ const NavbarAdmin = () => {
           <NavLink to="/AddCandidate" activeClassName="nav-active"> Add Candidate </NavLink>
         </li>
         <li>
-          <NavLink to="Registration" activeClassName="nav-active">
-            <i className="far fa-registered" /> Registration
-          </NavLink>
-        </li>
-        <li>
         <NavLink to="/Voting" activeClassName="nav-active">
             <i className="far fa-vote-yea" /> Voting
           </NavLink>

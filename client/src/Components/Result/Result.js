@@ -110,7 +110,6 @@ export default class Result extends Component {
           ) : this.state.isElStarted && !this.state.isElEnded ? (
             <div className="container-item attention">
               <center>
-                <h3>The election is being conducted at the movement.</h3>
                 <p>Result will be displayed once the election has ended.</p>
                 <p>Go ahead and cast your vote {"(if not already)"}.</p>
                 <br />
@@ -180,8 +179,8 @@ export function displayResults(candidates) {
         <div className="container-main">{displayWinner(candidates)}</div>
       ) : null}
       <div className="container-main" style={{ borderTop: "1px solid" }}>
-        <h2>Results</h2>
-        <small>Total candidates: {candidates.length}</small>
+        <h2 className="text-center">Results</h2>
+        <p className="text-center">Total candidates: {candidates.length}</p>
         {candidates.length < 1 ? (
           <div className="container-item attention">
             <center>No candidates.</center>
@@ -197,12 +196,6 @@ export function displayResults(candidates) {
                 </tr>
                 {candidates.map(renderResults)}
               </table>
-            </div>
-            <div
-              className="container-item"
-              style={{ border: "1px solid black" }}
-            >
-              <center>That is all.</center>
             </div>
           </>
         )}

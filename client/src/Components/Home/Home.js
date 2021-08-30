@@ -109,7 +109,7 @@ const Home = () => {
               <h3>The Election ended.</h3>
               <br />
               <Link
-                to="/Results"
+                to="/Result"
                 style={{ color: "black", textDecoration: "underline" }}
               >
                 See results

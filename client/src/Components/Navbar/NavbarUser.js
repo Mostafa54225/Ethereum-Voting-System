@@ -10,17 +10,12 @@ const NavbarUser = () => {
       <NavLink to="/" className="header"> Home </NavLink>
       <ul className="navbar-links">
         <li>
-          <NavLink to="/Registration" activeClassName="nav-active">
-            <i className="far fa-registered" /> Registration
-          </NavLink>
-        </li>
-        <li>
         <NavLink to="/Voting" activeClassName="nav-active">
             <i className="far fa-vote-yea" /> Voting
           </NavLink>
         </li>
         <li>
-        <NavLink to="/Results" activeClassName="nav-active">
+        <NavLink to="/Result" activeClassName="nav-active">
             <i className="far fa-poll-h" /> Results
           </NavLink>
         </li>

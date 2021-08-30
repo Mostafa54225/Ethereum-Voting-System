@@ -24,7 +24,6 @@ const AddCandidate = () => {
   const loadContracts = async () => {
     const web3 = await getWeb3()
     setWeb3(web3)
-    console.log(web3)
     const account = await web3.eth.getAccounts()
     const networkId = await web3.eth.net.getId()
     const deployedNetwork = Electionabi.networks[networkId]
@@ -34,7 +33,6 @@ const AddCandidate = () => {
       setCurrentAccount(account[0])
 
       const admin = await election.methods.getAdmin().call()
-      console.log(currentAccount)
       if(account[0] === admin) setIsAdmin(true)
       const candidateCount = await election.methods.getTotalCandidate().call()
       setCandidateCount(candidateCount)
@@ -57,7 +55,8 @@ const AddCandidate = () => {
     .methods
     .addCandidate(candidateName)
     .send({from: currentAccount})
-    window.location.reload()
+    .on('transactionhash', () => {console.log("Added Successfully")})
+    
   }
   if(!web3) {
     return (
@@ -94,18 +93,14 @@ const AddCandidate = () => {
               />
             </label>
             <button
-              className="btn-add"
-              disabled={
-                candidateName.length < 3 || candidateName.length > 21
-              }
-              onClick={addCandidate}
-            >
+              onClick={addCandidate} className="btn-add"
+              disabled={candidateName.length < 3 || candidateName.length > 21}>
               Add
             </button>
           </form>
         </div>
       </div>
-      {<LoadCandidates candidates={candidates}/>}
+      <LoadCandidates candidates={candidates}/>
     </div>
   )
 }
