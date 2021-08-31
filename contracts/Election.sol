@@ -4,14 +4,22 @@ pragma solidity >=0.4.22 <0.9.0;
 contract Election {
     address public admin;
     uint256 candidateCount;
+    uint256 adminCount;
     uint256 voterCount;
     bool start;
     bool end;
+    address[] public subAdmins;
     
     struct Candidate {
         uint256 candidateId;
         string name;
         uint256 voteCount;
+    }
+
+    struct Admins {
+        address adminAddress;
+        string name;
+        bool status;
     }
     
     struct ElectionDetails {
@@ -22,10 +30,12 @@ contract Election {
     ElectionDetails electionDetails;
     
     mapping(uint256 => Candidate) public candidates;
+    mapping(uint256 => Admins) public admins;
     
     constructor() {
         admin = msg.sender;
         candidateCount = 0;
+        adminCount = 0;
         voterCount = 0;
         start = false;
         end = false;
@@ -33,14 +43,27 @@ contract Election {
     function getAdmin() public view returns(address) {
         return admin;
     }
+
+
     modifier onlyAdmin() {
         require(msg.sender == admin);
         _;
     }
+
+
+    function addAdmin(address _adminAddress, string memory _name) public onlyAdmin {
+        adminCount++;
+        admins[adminCount] = Admins(_adminAddress, _name, true);
+    }
+    
     
     function addCandidate(string memory _name) public onlyAdmin {
         candidateCount++;
         candidates[candidateCount] = Candidate(candidateCount, _name, 0);
+    }
+
+    function getTotalAdmin() public view returns (uint256) {
+        return adminCount;
     }
     
     function getTotalCandidate() public view returns (uint256) {

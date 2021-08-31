@@ -4,9 +4,9 @@ import NavbarUser from '../../Navbar/NavbarUser'
 import NavbarAdmin from '../../Navbar/NavbarAdmin'
 import AdminOnly from '../AdminOnly'
 import Electionabi from '../../../contracts/Election.json'
-import LoadCandidates from './LoadCandidates'
+import LoadAdmins from './LoadAdmins'
 
-import './AddCandidate.css'
+import '../AddCandidate/AddCandidate.css'
 
 const AddCandidate = () => {
 
@@ -14,20 +14,18 @@ const AddCandidate = () => {
   const[ElectionSC, setElectionSC] = useState()
   const[isAdmin, setIsAdmin] = useState(false)
   const[web3, setWeb3] = useState(null)
-  const[candidateName, setCandidateName] = useState("")
-  const[candidateCount, setCandidateCount] = useState()
-  const[candidates, setCandidates] = useState([])
-  const[isSubAdmin, setIsSubAdmin] = useState(false)
+  const[adminName, setAdminName] = useState("")
   const[adminCount, setAdminCount] = useState()
   const[admins, setAdmins] = useState([])
-
+  const[adminAddress, setAdminAddress] = useState("")
+  const[isSubAdmin, setIsSubAdmin] = useState(false)
   useEffect(() => {
     if (!window.location.hash) {
       window.location = window.location + "#loaded";
       window.location.reload();
     }
     loadContracts()
-  })
+  }, [isSubAdmin])
   const loadContracts = async () => {
     const web3 = await getWeb3()
     setWeb3(web3)
@@ -40,9 +38,7 @@ const AddCandidate = () => {
       setCurrentAccount(account[0])
       const masterAdmin = await election.methods.getAdmin().call()
       if(account[0] === masterAdmin) setIsAdmin(true)
-      const candidateCount = await election.methods.getTotalCandidate().call()
-      setCandidateCount(candidateCount)
-
+      
       const adminCount = await election.methods.getTotalAdmin().call()
       setAdminCount(adminCount)
 
@@ -53,35 +49,37 @@ const AddCandidate = () => {
         admins.push(admin)
       }
       setAdmins(admins)
-
-      let candidates = []
-      for(let i = 1; i <= candidateCount; i++) {
-        const candidate = await election.methods.candidates(i).call()
-        candidates.push(candidate)
-      }
-      setCandidates(candidates)
-
+      
       for(let i = 0; i < adminCount; i++)
         if(account[0] === admins[i].adminAddress) setIsSubAdmin(true) 
     }
   }
 
-  const updateCandidateName = (e) => {
-    setCandidateName(e.target.value)
+  const updateAdminName = (e) => {
+    setAdminName(e.target.value)
+  }
+  const updateAdminAddress = (e) => {
+    setAdminAddress(e.target.value)
   }
 
-  const addCandidate = async () => {
+  const addAdmin = async () => {
     await ElectionSC
     .methods
-    .addCandidate(candidateName)
+    .addAdmin(adminAddress, adminName)
     .send({from: currentAccount})
     .on('transactionhash', () => {console.log("Added Successfully")})
     window.location.reload()
   }
   if(!web3) {
+    console.log(isSubAdmin)
+
     return (
       <>
-        { isAdmin? <NavbarAdmin />: <NavbarUser /> }
+      {isAdmin || isSubAdmin ? <NavbarAdmin /> : <NavbarUser />}
+        {/* { isAdmin || admins[currentAccount] ? <NavbarAdmin masterAdmin={true}/> :
+          !admins[currentAccount]? <NavbarAdmin masterAdmin={false} />
+          : <NavbarUser />
+        } */}
         <center>Loading Web3, accounts, and contracts...</center>
       </>
     )
@@ -99,8 +97,8 @@ const AddCandidate = () => {
     <div>
       <NavbarAdmin />
       <div className="container-main">
-        <h2 className="text-center">Add a new Candidate</h2>
-        <center>Total Candidates: {candidateCount}</center>
+        <h2 className="text-center">Add a new Admin</h2>
+        <center>Total Admins: {adminCount}</center>
         <div className="container-item">
           <form className="form">
             <label className={"label-ac"}>
@@ -108,20 +106,31 @@ const AddCandidate = () => {
               <input
                 className={"input-ac"}
                 type="text"
-                placeholder="Candidate Name"
-                value={candidateName}
-                onChange={updateCandidateName}
+                placeholder="Admin Name"
+                value={adminName}
+                onChange={updateAdminName}
+              />
+            </label>
+            <label className={"label-ac"}>
+              Public Address
+              <input
+                className={"input-ac"}
+                type="text"
+                placeholder="Public Address"
+                value={adminAddress}
+                onChange={updateAdminAddress}
               />
             </label>
             <button
-              onClick={addCandidate} className="btn-add"
-              disabled={candidateName.length < 3 || candidateName.length > 21}>
+              onClick={addAdmin} className="btn-add"
+              disabled={adminName.length < 3 || adminName.length > 21}>
               Add
             </button>
           </form>
         </div>
       </div>
-      <LoadCandidates candidates={candidates}/>
+      {!admins === [] ? <LoadAdmins admin={admins}/>: null}
+      
     </div>
   )
 }

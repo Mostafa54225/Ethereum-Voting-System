@@ -22,6 +22,8 @@ const Home = () => {
   const[electionTitle, setElectionTitle] = useState("")
   const[web3, setWeb3] = useState()
   const[electionDetails, setElectionDetails] = useState({elDetails: {adminName: adminName, electionTitle: electionTitle}})
+  const[admins, setAdmins] = useState([])
+  const[isSubAdmin, setIsSubAdmin] = useState(false)
 
   useEffect(() => {
     if (!window.location.hash) {
@@ -56,6 +58,22 @@ const Home = () => {
       setElectionTitle(electionTitle)
 
       setElectionDetails({elDetails: adminName, electionTitle})
+
+
+      const adminCount = await election.methods.getTotalAdmin().call()
+      setAdminName(adminCount)
+      let admins = []
+      for(let i = 1; i <= adminCount; i++) {
+        const admin = await election.methods.admins(i).call()
+        admins.push(admin)
+      }
+      setAdmins(admins)
+
+      for(let i = 0; i < adminCount; i++) {
+        if(account[0] === admins[i].adminAddress) setIsSubAdmin(true)
+      }
+      
+      
     }
   }
 
@@ -87,7 +105,7 @@ const Home = () => {
 
   return (
     <>
-      {isAdmin ? <NavbarAdmin />: <NavbarUser /> }
+      {isAdmin || isSubAdmin ? <NavbarAdmin /> : <NavbarUser />}
       <div className="container-main">
         <div className="container-item center-items info">
           <center>Your Account {currentAccount}</center>
@@ -95,13 +113,13 @@ const Home = () => {
         {!end & !start ? (
           <div className="container-item info">
             <center>
-              <h3>The Election has not been initialized</h3>
-              {isAdmin ? ( <p>Set Up the election</p> ):  ( <p>Please Wait</p> )}
+              <h3 className="text-center">The Election has not been initialized</h3>
+              {isAdmin || isSubAdmin ? ( <p>Set Up the election</p> ):  ( <p>Please Wait</p> )}
             </center>
           </div>
         ):null}
       </div>
-      {isAdmin ? <RenderAdmin registerElection={registerElection} start={start} end={end} endElection={endElection}/>
+      {isAdmin || isSubAdmin ? <RenderAdmin registerElection={registerElection} start={start} end={end} endElection={endElection}/>
       :start ? (
         <>
           <UserHome electionDetails={electionDetails} />

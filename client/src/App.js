@@ -4,6 +4,8 @@ import Home from './Components/Home/Home';
 import AddCandidate from './Components/Admin/AddCandidate/AddCandidate';
 import Voting from './Components/Voting/Voting';
 import Result from './Components/Result/Result';
+import AddAdmin from './Components/Admin/AddAdmin/AddAdmin'
+
 import NotFound from './Components/NotFound';
 
 function App() {
@@ -15,6 +17,7 @@ function App() {
           <Route exact path="/AddCandidate" component={AddCandidate} />
           <Route exact path="/Voting" component={Voting} />
           <Route exact path="/Result" component={Result} />
+          <Route exact path="/AddAdmin" component={AddAdmin} />
           <Route exact path="*" component={NotFound} />
         </Switch>
       </Router>

@@ -5,7 +5,7 @@ import './Navbar.css'
 
   
 
-const NavbarUser = () => {
+const NavbarUser = (masterAdmin) => {
 
   const hamburger = document.querySelector(".hamburger");
   const navMenu = document.querySelector(".nav-menu");
@@ -28,6 +28,12 @@ const NavbarUser = () => {
         <nav className="navbar">
             <a href="/" className="nav-logo">Admin.</a>
             <ul className="nav-menu">
+              {masterAdmin ? 
+                <li className="nav-item">
+                  <a href="/AddAdmin" className="nav-link">Add Admin</a>
+                </li>: null
+              }
+              
               <li className="nav-item">
                   <a href="/AddCandidate" className="nav-link">Add Candidate</a>
               </li>

@@ -22,7 +22,7 @@ const StartEnd = ({start, end, endElection}) => {
           {!end ? (
             <>
               <div
-                className="container-item attention"
+                className="container-item attention "
                 style={{ display: "block" }}
               >
                 <h2>Do not forget to add candidates.</h2>

@@ -26,6 +26,10 @@ export default class Result extends Component {
       candidates: [],
       isElStarted: false,
       isElEnded: false,
+      adminCount: 0,
+      admins: [],
+      isSubAdmin: false,
+      adminAddress: "",
     };
   }
   componentDidMount = async () => {
@@ -67,6 +71,22 @@ export default class Result extends Component {
       if (this.state.account === admin) {
         this.setState({ isAdmin: true });
       }
+
+      const adminCount = await instance.methods.getTotalAdmin().call()
+      this.setState({adminCount: adminCount})
+      for(let i = 1; i <= this.state.adminCount; i++) {
+        const admin = await instance.methods.admins(i).call()
+        this.state.admins.push({
+          adminAddress: admin.adminAddress,
+          name: admin.name,
+          status: admin.staus 
+        })
+      }
+      this.setState({admins: this.state.admins})
+      
+      for(let i = 0; i < adminCount; i++) 
+        if(this.state.account === this.state.admins[i].adminAddress) this.setState({isSubAdmin: true})
+
     } catch (error) {
       alert(`Failed to load web3, accounts, or contract. Check console for details.`);
       console.error(error);
@@ -77,15 +97,16 @@ export default class Result extends Component {
     if (!this.state.web3) {
       return (
         <>
-          {this.state.isAdmin ? <NavbarAdmin /> : <NavbarUser />}
+          {this.state.isAdmin || this.state.isSubAdmin ? <NavbarAdmin /> : <NavbarUser />}
           <center>Loading Web3, accounts, and contract...</center>
         </>
       );
     }
 
     return (
+      
       <>
-        {this.state.isAdmin ? <NavbarAdmin /> : <NavbarUser />}
+        {this.state.isAdmin || this.state.isSubAdmin ? <NavbarAdmin /> : <NavbarUser />}
         <br />
         <div>
           {!this.state.isElStarted && !this.state.isElEnded ? (

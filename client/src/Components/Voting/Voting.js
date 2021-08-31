@@ -31,6 +31,10 @@ export default class Voting extends Component {
         name: null,
         hasVoted: false,
       },
+      adminCount: 0,
+      admins: [],
+      isSubAdmin: false,
+      adminAddress: "",
     };
   }
   componentDidMount = async () => {
@@ -96,10 +100,27 @@ export default class Voting extends Component {
       });
 
       // Admin account and verification
-      const admin = await this.state.ElectionInstance.methods.getAdmin().call();
-      if (this.state.account === admin) {
+      const masterAmdin = await this.state.ElectionInstance.methods.getAdmin().call();
+      if (this.state.account === masterAmdin) {
         this.setState({ isAdmin: true });
       }
+
+      const adminCount = await instance.methods.getTotalAdmin().call()
+      this.setState({adminCount: adminCount})
+      for(let i = 1; i <= this.state.adminCount; i++) {
+        const admin = await instance.methods.admins(i).call()
+        this.state.admins.push({
+          adminAddress: admin.adminAddress,
+          name: admin.name,
+          status: admin.staus 
+        })
+      }
+      this.setState({admins: this.state.admins})
+      
+      for(let i = 0; i < adminCount; i++) 
+        if(this.state.account === this.state.admins[i].adminAddress) this.setState({isSubAdmin: true})
+
+
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
@@ -151,7 +172,7 @@ export default class Voting extends Component {
     if (!this.state.web3) {
       return (
         <>
-          {this.state.isAdmin ? <NavbarAdmin /> : <NavbarUser />}
+          {this.state.isAdmin || this.state.isSubAdmin ? <NavbarAdmin /> : <NavbarUser />}
           <center>Loading Web3, accounts, and contract...</center>
         </>
       );
@@ -159,7 +180,7 @@ export default class Voting extends Component {
 
     return (
       <>
-        {this.state.isAdmin ? <NavbarAdmin /> : <NavbarUser />}
+        {this.state.isAdmin || this.state.isSubAdmin ? <NavbarAdmin /> : <NavbarUser />}
         <div>
           {!this.state.isElStarted && !this.state.isElEnded ? (
             <NotInit />

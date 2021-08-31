@@ -23,7 +23,7 @@ const RenderAdmin = ({ registerElection, start, end, endElection }) => {
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         {!start & !end ? (
-          <div className="container-main">
+          <div className="container-main d-flex align-items-center justify-content-center">
             {/* about-admin */}
             <div className="about-admin">
               <h3>About Admin</h3>
