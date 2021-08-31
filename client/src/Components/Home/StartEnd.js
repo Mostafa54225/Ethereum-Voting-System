@@ -72,9 +72,9 @@ const StartEnd = ({start, end, endElection}) => {
           <div className="container-item">
             <button
               type="button"
-              // onClick={this.endElection}
               onClick={endElection}
               style={btn}
+              className="d-flex justify-content-center"
             >
               End
             </button>

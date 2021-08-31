@@ -49,8 +49,8 @@ const AddCandidate = () => {
       let admins = []
       for(let i = 1; i <= adminCount; i++) {
         const admin = await election.methods.admins(i).call()
-        
         admins.push(admin)
+        if(account[0] === masterAdmin || account[0] === admin.adminAddress) setIsAdmin(true)
       }
       setAdmins(admins)
 
@@ -59,10 +59,7 @@ const AddCandidate = () => {
         const candidate = await election.methods.candidates(i).call()
         candidates.push(candidate)
       }
-      setCandidates(candidates)
-
-      for(let i = 0; i < adminCount; i++)
-        if(account[0] === admins[i].adminAddress) setIsSubAdmin(true) 
+      setCandidates(candidates)      
     }
   }
 
@@ -86,8 +83,7 @@ const AddCandidate = () => {
       </>
     )
   }
-  if(!web3 && (!isAdmin || !isSubAdmin)) {
-    console.log(isSubAdmin)
+  if(!isAdmin) {
     return(
       <>
         <NavbarUser />

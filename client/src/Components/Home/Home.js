@@ -43,6 +43,7 @@ const Home = () => {
       const election = new web3.eth.Contract(Electionabi.abi, deployedNetwork.address)
       setElectionSC(election)
       setCurrentAccount(account[0])
+      console.log(currentAccount)
       const admin = await election.methods.getAdmin().call()
       if(account[0] === admin) setIsAdmin(true)
         

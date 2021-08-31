@@ -29,8 +29,8 @@ export default class Voting extends Component {
       currentVoter: {
         address: undefined,
         name: null,
-        hasVoted: false,
       },
+      voted: false,
       adminCount: 0,
       admins: [],
       isSubAdmin: false,
@@ -63,6 +63,9 @@ export default class Voting extends Component {
         account: accounts[0],
       });
 
+      console.log(this.state.account)
+      const voted = await this.state.ElectionInstance.methods.voted(this.state.account).call()
+      this.setState({voted: voted})
       // Get total number of candidates
       const candidateCount = await this.state.ElectionInstance.methods
         .getTotalCandidate()
@@ -101,9 +104,7 @@ export default class Voting extends Component {
 
       // Admin account and verification
       const masterAmdin = await this.state.ElectionInstance.methods.getAdmin().call();
-      if (this.state.account === masterAmdin) {
-        this.setState({ isAdmin: true });
-      }
+      
 
       const adminCount = await instance.methods.getTotalAdmin().call()
       this.setState({adminCount: adminCount})
@@ -115,11 +116,13 @@ export default class Voting extends Component {
           status: admin.staus 
         })
       }
+      if (this.state.account === masterAmdin || this.state.account === this.state.admins.adminAddress) {
+        this.setState({ isAdmin: true });
+      }
       this.setState({admins: this.state.admins})
       
       for(let i = 0; i < adminCount; i++) 
         if(this.state.account === this.state.admins[i].adminAddress) this.setState({isSubAdmin: true})
-
 
     } catch (error) {
       // Catch any errors for any of the above operations.
@@ -135,7 +138,6 @@ export default class Voting extends Component {
       await this.state.ElectionInstance.methods
         .vote(id)
         .send({ from: this.state.account });
-      this.state.currentVoter.hasVoted = true
       window.location.reload();
     };
     const confirmVote = (id, name) => {
@@ -147,7 +149,7 @@ export default class Voting extends Component {
       }
     };
     return (
-      <div className="container-item">
+      <div className="container-item d-flex p-2" style={{justifyContent: 'space-around'}}>
         <div className="candidate-info">
           <h2>
             {candidate.name} <small>#{candidate.id}</small>
@@ -156,11 +158,8 @@ export default class Voting extends Component {
         <div className="vote-btn-container">
           <button
             onClick={() => confirmVote(candidate.id, candidate.name)}
-            className="vote-bth"
-            disabled={
-              this.state.currentVoter.hasVoted
-            }
-          >
+            className="btn btn-primary"
+            disabled={this.state.voted ? true: false}>
             Vote
           </button>
         </div>
@@ -186,10 +185,10 @@ export default class Voting extends Component {
             <NotInit />
           ) : this.state.isElStarted && !this.state.isElEnded ? (
             <>
-              {this.state.currentVoter.hasVoted ? (
+              {this.state.voted ? (
                   <div className="container-item success">
                     <div>
-                      <strong>You've casted your vote.</strong>
+                      <p className="text-center h4">You've casted your vote.</p>
                       <p />
                       <center>
                         <Link
@@ -198,6 +197,7 @@ export default class Voting extends Component {
                             color: "black",
                             textDecoration: "underline",
                           }}
+                          className="h4 mb-4"
                         >
                           See Results
                         </Link>
@@ -210,8 +210,8 @@ export default class Voting extends Component {
                     </div>
                 )}
               <div className="container-main">
-                <h2>Candidates</h2>
-                <small>Total candidates: {this.state.candidates.length}</small>
+                <h2 className="text-center">Candidates</h2>
+                <p className="text-center">Total candidates: {this.state.candidates.length}</p> 
                 {this.state.candidates.length < 1 ? (
                   <div className="container-item attention">
                     <center>Not one to vote for.</center>

@@ -18,14 +18,13 @@ const AddCandidate = () => {
   const[adminCount, setAdminCount] = useState()
   const[admins, setAdmins] = useState([])
   const[adminAddress, setAdminAddress] = useState("")
-  const[isSubAdmin, setIsSubAdmin] = useState(false)
   useEffect(() => {
     if (!window.location.hash) {
       window.location = window.location + "#loaded";
       window.location.reload();
     }
     loadContracts()
-  }, [isSubAdmin])
+  }, )
   const loadContracts = async () => {
     const web3 = await getWeb3()
     setWeb3(web3)
@@ -37,7 +36,7 @@ const AddCandidate = () => {
       setElectionSC(election)
       setCurrentAccount(account[0])
       const masterAdmin = await election.methods.getAdmin().call()
-      if(account[0] === masterAdmin) setIsAdmin(true)
+      
       
       const adminCount = await election.methods.getTotalAdmin().call()
       setAdminCount(adminCount)
@@ -47,11 +46,13 @@ const AddCandidate = () => {
         const admin = await election.methods.admins(i).call()
         
         admins.push(admin)
+        if(account[0] === masterAdmin || account[0] === admin.adminAddress) setIsAdmin(true)
       }
-      setAdmins(admins)
       
-      for(let i = 0; i < adminCount; i++)
-        if(account[0] === admins[i].adminAddress) setIsSubAdmin(true) 
+      setAdmins(admins)
+      console.log(admins)
+      // for(let i = 1; i <= adminCount; i++)
+      //   if(account[0] === admins[i].adminAddress) setIsSubAdmin(true) 
     }
   }
 
@@ -71,11 +72,10 @@ const AddCandidate = () => {
     window.location.reload()
   }
   if(!web3) {
-    console.log(isSubAdmin)
-
+    console.log(isAdmin)
     return (
       <>
-      {isAdmin || isSubAdmin ? <NavbarAdmin /> : <NavbarUser />}
+      {isAdmin ? <NavbarAdmin /> : <NavbarUser />}
         {/* { isAdmin || admins[currentAccount] ? <NavbarAdmin masterAdmin={true}/> :
           !admins[currentAccount]? <NavbarAdmin masterAdmin={false} />
           : <NavbarUser />
@@ -84,8 +84,7 @@ const AddCandidate = () => {
       </>
     )
   }
-  if(!web3 && (!isAdmin || !isSubAdmin)) {
-    console.log(isSubAdmin)
+  if(!isAdmin ) {
     return(
       <>
         <NavbarUser />
@@ -129,8 +128,7 @@ const AddCandidate = () => {
           </form>
         </div>
       </div>
-      {!admins === [] ? <LoadAdmins admin={admins}/>: null}
-      
+      <LoadAdmins admins={admins}/>
     </div>
   )
 }

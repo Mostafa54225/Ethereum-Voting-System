@@ -8,7 +8,6 @@ contract Election {
     uint256 voterCount;
     bool start;
     bool end;
-    address[] public subAdmins;
     
     struct Candidate {
         uint256 candidateId;
@@ -40,47 +39,52 @@ contract Election {
         start = false;
         end = false;
     }
-    function getAdmin() public view returns(address) {
+    function getAdmin() external view returns(address) {
         return admin;
     }
 
-
     modifier onlyAdmin() {
-        require(msg.sender == admin);
+        require(msg.sender == admin || loopAdmins());
         _;
     }
 
+    function loopAdmins() public view returns(bool) {
+        for(uint i =1; i <= adminCount; i++) {
+            if(admins[i].adminAddress == msg.sender) return true;
+        }
+        return false;
+    }
 
-    function addAdmin(address _adminAddress, string memory _name) public onlyAdmin {
+    function addAdmin(address _adminAddress, string memory _name) external onlyAdmin {
         adminCount++;
         admins[adminCount] = Admins(_adminAddress, _name, true);
     }
     
     
-    function addCandidate(string memory _name) public onlyAdmin {
+    function addCandidate(string memory _name) external onlyAdmin {
         candidateCount++;
         candidates[candidateCount] = Candidate(candidateCount, _name, 0);
     }
 
-    function getTotalAdmin() public view returns (uint256) {
+    function getTotalAdmin() external view returns (uint256) {
         return adminCount;
     }
     
-    function getTotalCandidate() public view returns (uint256) {
+    function getTotalCandidate() external view returns (uint256) {
         return candidateCount;
     }
-    function getTotalVoters() public view returns (uint256) {
+    function getTotalVoters() external view returns (uint256) {
         return voterCount;
     }
-    function setElectionDetails(string memory _adminName, string memory _electionTitle) public onlyAdmin {
+    function setElectionDetails(string memory _adminName, string memory _electionTitle) external onlyAdmin {
         electionDetails = ElectionDetails(_adminName, _electionTitle);
         start = true;
         end = false;
     }
-    function getAdminName() public view returns (string memory) {
+    function getAdminName() external view returns (string memory) {
         return electionDetails.adminName;
     }
-    function getElectionTitle() public view returns(string memory) {
+    function getElectionTitle() external view returns(string memory) {
         return electionDetails.electionTitle;
     }
     
@@ -88,21 +92,20 @@ contract Election {
     struct Voter {
         address voterAddress;
         string name;
-        bool hasVoted;
     }
     address[] public voters;
 
     mapping(address => Voter) public voterDetails;
-    mapping(address => bool) voted;
+    mapping(address => bool) public voted;
     
-    function registerAsVoter(string memory _name) public {
-        voterDetails[msg.sender] = Voter(msg.sender, _name, false);
+    function registerAsVoter(string memory _name) external {
+        voterDetails[msg.sender] = Voter(msg.sender, _name);
         voters.push(msg.sender);
         voterCount++;
     }
     
     
-    function vote (uint256 candidateId) public {
+    function vote (uint256 candidateId) external {
         require(!voted[msg.sender]);
         require(start);
         require(!end);
@@ -110,18 +113,18 @@ contract Election {
         voted[msg.sender] = true;
     }
     
-    function endElection() public onlyAdmin {
+    function endElection() external onlyAdmin {
         end = true;
         start = false;
     }
-    function startElection() public onlyAdmin {
+    function startElection() external onlyAdmin {
         start = true;
         end = false;
     }
     function getStart() public view returns(bool) {
         return start;
     }
-    function getEnd() public view returns(bool) {
+    function getEnd() external view returns(bool) {
         return end;
     }
     
