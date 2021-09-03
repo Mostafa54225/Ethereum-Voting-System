@@ -67,7 +67,6 @@ export default class Voting extends Component {
         account: accounts[0],
       });
 
-      console.log(this.state.account)
       const voted = await this.state.ElectionInstance.methods.voted(this.state.account).call()
       this.setState({voted: voted})
       // Get total number of candidates
@@ -130,7 +129,7 @@ export default class Voting extends Component {
       
       for(let i = 0; i < adminCount; i++) 
         if(this.state.account === this.state.admins[i].adminAddress) this.setState({isSubAdmin: true})
-
+      console.log(this.state.currentVoter.isVerified)
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
@@ -168,7 +167,7 @@ export default class Voting extends Component {
             className="btn btn-primary"
             disabled=
               {!this.state.currentVoter.isRegistered ||
-               this.state.currentVoter.isVerified == 1 ||
+               (this.state.currentVoter.isVerified == 2 || this.state.currentVoter.isVerified == 0 )||
                this.state.currentVoter.voted ? true: false}>
             Vote
           </button>
@@ -203,7 +202,7 @@ export default class Voting extends Component {
                         <h3 className="text-center">You've casted your vote.</h3>
                         <center>
                           <Link
-                            to="/Results"
+                            to="/Result"
                             style={{
                               color: "black",
                               textDecoration: "underline",
@@ -216,7 +215,7 @@ export default class Voting extends Component {
                     </div>
                   ) : (
                     <div className="container-item info">
-                      <center>Go ahead and cast your vote.</center>
+                      <h3 className="text-center">Go ahead and cast your vote.</h3>
                     </div>
                   )
                 ) : (
@@ -228,11 +227,11 @@ export default class Voting extends Component {
                 <>
                   <div className="container-item attention">
                     <center>
-                      <p>You're not registered. Please register first.</p>
+                      <h3>You're not registered. Please register first.</h3>
                       <br />
                       <Link
                         to="/Registration"
-                        style={{ color: "black", textDecoration: "underline" }}
+                        style={{ color: "black", textDecoration: "underline", fontSize: '20px' }}
                       >
                         Registration Page
                       </Link>

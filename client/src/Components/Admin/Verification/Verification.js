@@ -78,26 +78,24 @@ export default class Verification extends Component {
     }
     return(
       <>
-        {/* {voter.isVerfied == 1 ? (
-          <div className="container-list success">
-            <p style={{ margin: "7px 0px" }}>AC: {voter.address}</p>
-            <table>
-              <tr>
-                <th>Name</th>
-                <th>Phone</th>
-                <th>Voted</th>
-              </tr>
-              <tr>
-                <td>{voter.name}</td>
-                <td>{voter.phone}</td>
-                <td>{voter.voted ? "True" : "False"}</td>
-              </tr>
-            </table>
+      <hr style={{width:'100%', height: '4px' }}></hr>
+        {voter.isVerfied == 1 ? (
+          <div className="d-flex bd-highlight">
+            <p className="p-2 flex-fill bd-highlight" style={{ margin: "7px 0px" }}>AC: {voter.address}</p>
+            <p className="p-2 flex-fill bd-highlight">Approved</p>
+            <p className="p-2 flex-fill bd-highlight">Vote Status: {voter.voted ? "true" : "false"}</p>
           </div>
-        ) : null} */}
+        ) : voter.isVerfied == 2 ?(
+          <div className="d-flex bd-highlight">
+            <p className="p-2 flex-fill bd-highlight" style={{ margin: "7px 0px" }}>AC: {voter.address}</p>
+            <p className="p-2 flex-fill bd-highlight">Rejected</p>
+            <p className="p-2 flex-fill bd-highlight">Vote Status: {voter.voted ? "true" : "false"}</p>
+          </div>
+        ):(
+        
         <div
           className="container-list attention"
-          style={{}}
+          style={{display: voter.isVerfied == 1 ? "none": null}}
         >
           <table>
             <tr>
@@ -142,7 +140,7 @@ export default class Verification extends Component {
             </button>
           </div>
         </div>
-
+        )}
       </>
     )
   }

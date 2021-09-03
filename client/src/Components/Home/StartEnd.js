@@ -69,13 +69,11 @@ const StartEnd = ({start, end, endElection}) => {
               <p>The election started.</p>
             </center>
           </div>
-          <div className="container-item">
+          <div className="container-item" style={{margin: 'auto', width: '400px'}}>
             <button
               type="button"
               onClick={endElection}
-              style={btn}
-              className="d-flex justify-content-center"
-            >
+              style={btn}>
               End
             </button>
           </div>
