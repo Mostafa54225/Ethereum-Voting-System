@@ -28,6 +28,9 @@ const NavbarUser = () => {
             <a href="/" className="nav-logo">Home.</a>
             <ul className="nav-menu">
                 <li className="nav-item">
+                    <a href="/Registration" className="nav-link">Registration</a>
+                </li>
+                <li className="nav-item">
                     <a href="/Voting" className="nav-link">Voting</a>
                 </li>
                 <li className="nav-item">

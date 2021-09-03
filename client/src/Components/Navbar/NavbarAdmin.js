@@ -33,7 +33,9 @@ const NavbarUser = (masterAdmin) => {
                   <a href="/AddAdmin" className="nav-link">Add Admin</a>
                 </li>: null
               }
-              
+              <li className="nav-item">
+                  <a href="/Verification" className="nav-link">Verification</a>
+              </li>
               <li className="nav-item">
                   <a href="/AddCandidate" className="nav-link">Add Candidate</a>
               </li>

@@ -92,24 +92,40 @@ contract Election {
     struct Voter {
         address voterAddress;
         string name;
+        string phone;
+        uint isVerfied;
+        bool isRegistered;
     }
     address[] public voters;
 
     mapping(address => Voter) public voterDetails;
     mapping(address => bool) public voted;
     
-    function registerAsVoter(string memory _name) external {
-        voterDetails[msg.sender] = Voter(msg.sender, _name);
+    function registerAsVoter(string memory _name, string memory _phone) external {
+        require(!voterDetails[msg.sender].isRegistered);
+        voterDetails[msg.sender] = Voter(msg.sender, _name, _phone, 0, true);
         voters.push(msg.sender);
         voterCount++;
     }
+
+    function updateVoter(string memory _name, string memory _phone) external {
+        require(voterDetails[msg.sender].isRegistered);
+        require(voterDetails[msg.sender].isVerfied != 2);
+        voterDetails[msg.sender].name = _name;
+        voterDetails[msg.sender].phone = _phone;
+    }
+
     
+    function verifyVoter(address _voterAddress, uint _verifyStatus) external onlyAdmin {
+        voterDetails[_voterAddress].isVerfied = _verifyStatus;
+    }
     
     function vote (uint256 candidateId) external {
         require(!voted[msg.sender]);
+        require(voterDetails[msg.sender].isVerfied == 1);
         require(start);
         require(!end);
-        candidates[candidateId].voteCount++;
+        candidates[candidateId].voteCount++;    
         voted[msg.sender] = true;
     }
     

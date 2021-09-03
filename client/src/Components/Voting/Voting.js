@@ -29,6 +29,10 @@ export default class Voting extends Component {
       currentVoter: {
         address: undefined,
         name: null,
+        phone: null,
+        voted: false,
+        isVerified: 0,
+        isRegistered: false
       },
       voted: false,
       adminCount: 0,
@@ -98,7 +102,10 @@ export default class Voting extends Component {
         currentVoter: {
           address: voter.voterAddress,
           name: voter.name,
-          hasVoted: voter.hasVoted,
+          phone: voter.phone,
+          voted: voted,
+          isVerified: voter.isVerfied,
+          isRegistered: voter.isRegistered
         },
       });
 
@@ -159,7 +166,10 @@ export default class Voting extends Component {
           <button
             onClick={() => confirmVote(candidate.id, candidate.name)}
             className="btn btn-primary"
-            disabled={this.state.voted ? true: false}>
+            disabled=
+              {!this.state.currentVoter.isRegistered ||
+               this.state.currentVoter.isVerified == 1 ||
+               this.state.currentVoter.voted ? true: false}>
             Vote
           </button>
         </div>
@@ -185,33 +195,54 @@ export default class Voting extends Component {
             <NotInit />
           ) : this.state.isElStarted && !this.state.isElEnded ? (
             <>
-              {this.state.voted ? (
-                  <div className="container-item success">
-                    <div>
-                      <p className="text-center h4">You've casted your vote.</p>
-                      <p />
-                      <center>
-                        <Link
-                          to="/Result"
-                          style={{
-                            color: "black",
-                            textDecoration: "underline",
-                          }}
-                          className="h4 mb-4"
-                        >
-                          See Results
-                        </Link>
-                      </center>
+              {this.state.currentVoter.isRegistered ? (
+                this.state.currentVoter.isVerified == 1 ? (
+                  this.state.currentVoter.voted ? (
+                    <div className="container-item success">
+                      <div>
+                        <h3 className="text-center">You've casted your vote.</h3>
+                        <center>
+                          <Link
+                            to="/Results"
+                            style={{
+                              color: "black",
+                              textDecoration: "underline",
+                            }}
+                          >
+                            See Results
+                          </Link>
+                        </center>
+                      </div>
                     </div>
-                  </div>
                   ) : (
                     <div className="container-item info">
                       <center>Go ahead and cast your vote.</center>
                     </div>
-                )}
+                  )
+                ) : (
+                  <div className="container-item attention">
+                    <h3 className="text-center">Please wait for admin to verify.</h3>
+                  </div>
+                )
+              ) : (
+                <>
+                  <div className="container-item attention">
+                    <center>
+                      <p>You're not registered. Please register first.</p>
+                      <br />
+                      <Link
+                        to="/Registration"
+                        style={{ color: "black", textDecoration: "underline" }}
+                      >
+                        Registration Page
+                      </Link>
+                    </center>
+                  </div>
+                </>
+              )}
               <div className="container-main">
-                <h2 className="text-center">Candidates</h2>
-                <p className="text-center">Total candidates: {this.state.candidates.length}</p> 
+                <h2>Candidates</h2>
+                <small>Total candidates: {this.state.candidates.length}</small>
                 {this.state.candidates.length < 1 ? (
                   <div className="container-item attention">
                     <center>Not one to vote for.</center>

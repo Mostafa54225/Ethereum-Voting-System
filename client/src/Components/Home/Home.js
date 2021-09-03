@@ -21,7 +21,7 @@ const Home = () => {
   const[adminName, setAdminName] = useState("")
   const[electionTitle, setElectionTitle] = useState("")
   const[web3, setWeb3] = useState()
-  const[electionDetails, setElectionDetails] = useState({elDetails: {adminName: adminName, electionTitle: electionTitle}})
+  const[electionDetails, setElectionDetails] = useState({})
   const[admins, setAdmins] = useState([])
   const[isSubAdmin, setIsSubAdmin] = useState(false)
 
