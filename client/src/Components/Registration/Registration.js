@@ -187,9 +187,7 @@ export default class Registration extends Component {
                   <p>
                     <span style={{ color: "red" }}> Note: </span>
                     <br /> Make sure your account address and Phone number are
-                    correct. <br /> Admin might not approve your account if the
-                    provided Phone number nub does not matches the account
-                    address registered in admins catalogue.
+                    correct.
                   </p>
                   <button
                     className="btn-add"

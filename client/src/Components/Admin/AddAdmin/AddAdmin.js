@@ -24,6 +24,7 @@ const AddCandidate = () => {
       window.location.reload();
     }
     loadContracts()
+
   }, )
   const loadContracts = async () => {
     const web3 = await getWeb3()
@@ -44,13 +45,11 @@ const AddCandidate = () => {
       let admins = []
       for(let i = 1; i <= adminCount; i++) {
         const admin = await election.methods.admins(i).call()
-        
-        admins.push(admin)
         if(account[0] === masterAdmin || account[0] === admin.adminAddress) setIsAdmin(true)
+        admins.push(admin)
       }
-      
       setAdmins(admins)
-      console.log(admins)
+      
       // for(let i = 1; i <= adminCount; i++)
       //   if(account[0] === admins[i].adminAddress) setIsSubAdmin(true) 
     }
@@ -72,7 +71,6 @@ const AddCandidate = () => {
     window.location.reload()
   }
   if(!web3) {
-    console.log(isAdmin)
     return (
       <>
       {isAdmin ? <NavbarAdmin /> : <NavbarUser />}
@@ -84,7 +82,8 @@ const AddCandidate = () => {
       </>
     )
   }
-  if(!isAdmin ) {
+  if(!isAdmin) {
+    
     return(
       <>
         <NavbarUser />

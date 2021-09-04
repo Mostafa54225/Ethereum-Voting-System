@@ -87,7 +87,7 @@ const AddCandidate = () => {
     return(
       <>
         <NavbarUser />
-        <AdminOnly page="Add Admins Page"/>
+        <AdminOnly page="Add Candidates Page"/>
       </>
     )
   }
