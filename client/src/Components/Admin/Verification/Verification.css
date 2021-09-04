@@ -1,8 +1,6 @@
 .btn-verification {
-  padding: 11px;
-  width: 50%;
-  margin: 1em;
-  margin-top: 11px;
-  margin-bottom: 11px;
-  float: inline-end;
+  width: 100%;
+  padding: 10px
+  /* float: inline-end; */
+
 }

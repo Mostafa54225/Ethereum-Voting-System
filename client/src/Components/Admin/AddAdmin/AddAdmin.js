@@ -38,14 +38,14 @@ const AddCandidate = () => {
       setCurrentAccount(account[0])
       const masterAdmin = await election.methods.getAdmin().call()
       
-      
+      if(account[0] === masterAdmin) setIsAdmin(true)
       const adminCount = await election.methods.getTotalAdmin().call()
       setAdminCount(adminCount)
 
       let admins = []
       for(let i = 1; i <= adminCount; i++) {
         const admin = await election.methods.admins(i).call()
-        if(account[0] === masterAdmin || account[0] === admin.adminAddress) setIsAdmin(true)
+        if(account[0] === admin.adminAddress) setIsAdmin(true)
         admins.push(admin)
       }
       setAdmins(admins)

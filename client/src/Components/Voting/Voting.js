@@ -88,7 +88,8 @@ export default class Voting extends Component {
           .call();
         this.state.candidates.push({
           id: candidate.candidateId,
-          name: candidate.name
+          name: candidate.name,
+          voteCount: candidate.voteCount
         });
       }
       this.setState({ candidates: this.state.candidates });
@@ -158,8 +159,9 @@ export default class Voting extends Component {
       <div className="container-item d-flex p-2" style={{justifyContent: 'space-around'}}>
         <div className="candidate-info">
           <h2>
-            {candidate.name} <small>#{candidate.id}</small>
+          <small>#{candidate.id}</small> {candidate.name} <strong className="text-success">{candidate.voteCount}</strong>
           </h2>
+          
         </div>
         <div className="vote-btn-container">
           <button

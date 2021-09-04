@@ -234,6 +234,7 @@ export default class Registration extends Component {
 } 
 
 export function loadCurrentVoter(voter, isRegistered) {
+  
   return (
     <>
       <div
@@ -275,6 +276,7 @@ export function loadCurrentVoter(voter, isRegistered) {
   );
 }
 export function loadAllVoters(voters) {
+  
   const renderAllVoters = (voter) => {
     return (
       <>

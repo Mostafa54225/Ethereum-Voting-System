@@ -6,7 +6,7 @@ import Voting from './Components/Voting/Voting';
 import Result from './Components/Result/Result';
 import AddAdmin from './Components/Admin/AddAdmin/AddAdmin'
 import Registration from './Components/Registration/Registration'
-import Verification from './Components/Admin/Verification/Verification';
+import Verification from './Components/Admin/Verification/Verification'
 
 import NotFound from './Components/NotFound';
 
