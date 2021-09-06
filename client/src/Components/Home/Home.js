@@ -35,7 +35,7 @@ const Home = () => {
     setWeb3(web3)
     const account = await web3.eth.getAccounts()
     const networkId = await web3.eth.net.getId()
-    const deployedNetwork = Electionabi.networks[networkId]
+    const deployedNetwork = Electionabi.networks[3]
     if(deployedNetwork) {
       const election = new web3.eth.Contract(Electionabi.abi, deployedNetwork.address)
       setElectionSC(election)
