@@ -259,15 +259,15 @@ export default class Voting extends Component {
                       <div>
                         <h3 className="text-center">You've casted your vote.</h3>
                         <center>
-                          <Link
-                            to="#/Result"
+                          <a
+                            href="#/Result"
                             style={{
                               color: "black",
                               textDecoration: "underline",
                             }}
                           >
                             See Results
-                          </Link>
+                          </a>
                         </center>
                       </div>
                     </div>
@@ -287,12 +287,12 @@ export default class Voting extends Component {
                     <center>
                       <h3>You're not registered. Please register first.</h3>
                       <br />
-                      <Link
-                        to="#/Registration"
+                      <a
+                        href="#/Registration"
                         style={{ color: "black", textDecoration: "underline", fontSize: '20px' }}
                       >
                         Registration Page
-                      </Link>
+                      </a>
                     </center>
                   </div>
                 </>
@@ -323,12 +323,12 @@ export default class Voting extends Component {
                 <center>The Election ended.</center>
                 <center>
                   <br />
-                  <Link
-                    to="#/Result"
+                  <a
+                    href="#/Result"
                     style={{ color: "black", textDecoration: "underline" }}
                   >
                     See results
-                  </Link>
+                  </a>
                 </center>
               </div>
             </>
