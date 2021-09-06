@@ -42,6 +42,7 @@
     ]
   },
   "devDependencies": {
+    "@truffle/hdwallet-provider": "^1.5.0",
     "gh-pages": "^3.2.3"
   }
 }
