@@ -30,20 +30,20 @@ const NavbarUser = (masterAdmin) => {
             <ul className="nav-menu">
               {masterAdmin ? 
                 <li className="nav-item">
-                  <a href="/AddAdmin" className="nav-link">Add Admin</a>
+                  <a href={process.env.PUBLIC_URL + "/AddAdmin"} className="nav-link">Add Admin</a>
                 </li>: null
               }
               <li className="nav-item">
-                  <a href={process.env.PUBLIC_URL + "/Verification"} className="nav-link">Verfication</a>
+                  <a href={process.env.PUBLIC_URL + "#/Verification"} className="nav-link">Verfication</a>
               </li>
               <li className="nav-item">
-                  <a href="/AddCandidate" className="nav-link">Add Candidate</a>
+                  <a href={process.env.PUBLIC_URL + "#/AddCandidate"} className="nav-link">Add Candidate</a>
               </li>
               <li className="nav-item">
-                  <a href="/Voting" className="nav-link">Voting</a>
+                  <a href={process.env.PUBLIC_URL + "/#Voting"} className="nav-link">Voting</a>
               </li>
               <li className="nav-item">
-                  <a href="/Result" className="nav-link">Result</a>
+                  <a href={process.env.PUBLIC_URL + /"#Result"} className="nav-link">Result</a>
               </li>
             </ul>
             <div className="hamburger" onClick={mobileMenu}>
