@@ -288,7 +288,7 @@ export default class Voting extends Component {
                       <h3>You're not registered. Please register first.</h3>
                       <br />
                       <Link
-                        to="/Registration"
+                        to="#/Registration"
                         style={{ color: "black", textDecoration: "underline", fontSize: '20px' }}
                       >
                         Registration Page
@@ -324,7 +324,7 @@ export default class Voting extends Component {
                 <center>
                   <br />
                   <Link
-                    to="/Result"
+                    to="#/Result"
                     style={{ color: "black", textDecoration: "underline" }}
                   >
                     See results
