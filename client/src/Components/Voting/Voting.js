@@ -134,18 +134,16 @@ export default class Voting extends Component {
       
 
 
-        
-
-
       let options = {
           filter: {
-              myIndexedParam: [20, 23], myOtherIndexedParam: this.state.account
+              voterAddress: this.state.account
           },
-          fromBlock: 0,                  //Number || "earliest" || "pending" || "latest"
+          fromBlock: 375,                  //Number || "earliest" || "pending" || "latest"
           toBlock: 'latest'
       };
       
       this.state.ElectionInstance.getPastEvents('voterIsVoted', options).then((result) => {
+        console.log(result)
         for(let i = 0; i < result.length; i++) {
           this.state.eventVoters.push({
             candidateId: result[i].returnValues._candidateId,
