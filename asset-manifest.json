@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/Ethereum-Voting-System/static/css/main.b7bae849.chunk.css",
-    "main.js": "/Ethereum-Voting-System/static/js/main.8974b208.chunk.js",
-    "main.js.map": "/Ethereum-Voting-System/static/js/main.8974b208.chunk.js.map",
+    "main.js": "/Ethereum-Voting-System/static/js/main.8420da75.chunk.js",
+    "main.js.map": "/Ethereum-Voting-System/static/js/main.8420da75.chunk.js.map",
     "runtime-main.js": "/Ethereum-Voting-System/static/js/runtime-main.313f04a6.js",
     "runtime-main.js.map": "/Ethereum-Voting-System/static/js/runtime-main.313f04a6.js.map",
-    "static/js/2.a3bf0460.chunk.js": "/Ethereum-Voting-System/static/js/2.a3bf0460.chunk.js",
-    "static/js/2.a3bf0460.chunk.js.map": "/Ethereum-Voting-System/static/js/2.a3bf0460.chunk.js.map",
+    "static/js/2.926a8d1f.chunk.js": "/Ethereum-Voting-System/static/js/2.926a8d1f.chunk.js",
+    "static/js/2.926a8d1f.chunk.js.map": "/Ethereum-Voting-System/static/js/2.926a8d1f.chunk.js.map",
     "index.html": "/Ethereum-Voting-System/index.html",
     "static/css/main.b7bae849.chunk.css.map": "/Ethereum-Voting-System/static/css/main.b7bae849.chunk.css.map",
-    "static/js/2.a3bf0460.chunk.js.LICENSE.txt": "/Ethereum-Voting-System/static/js/2.a3bf0460.chunk.js.LICENSE.txt"
+    "static/js/2.926a8d1f.chunk.js.LICENSE.txt": "/Ethereum-Voting-System/static/js/2.926a8d1f.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.313f04a6.js",
-    "static/js/2.a3bf0460.chunk.js",
+    "static/js/2.926a8d1f.chunk.js",
     "static/css/main.b7bae849.chunk.css",
-    "static/js/main.8974b208.chunk.js"
+    "static/js/main.8420da75.chunk.js"
   ]
 }
