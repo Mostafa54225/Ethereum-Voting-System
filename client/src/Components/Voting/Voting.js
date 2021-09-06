@@ -260,7 +260,7 @@ export default class Voting extends Component {
                         <h3 className="text-center">You've casted your vote.</h3>
                         <center>
                           <Link
-                            to="/#Result"
+                            to="#/Result"
                             style={{
                               color: "black",
                               textDecoration: "underline",
