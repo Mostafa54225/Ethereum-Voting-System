@@ -39,6 +39,7 @@ export default class Voting extends Component {
       admins: [],
       isSubAdmin: false,
       adminAddress: "",
+      eventVoters: []
     };
   }
   componentDidMount = async () => {
@@ -130,7 +131,45 @@ export default class Voting extends Component {
       
       for(let i = 0; i < adminCount; i++) 
         if(this.state.account === this.state.admins[i].adminAddress) this.setState({isSubAdmin: true})
-      console.log(this.state.currentVoter.isVerified)
+      
+
+
+        
+
+
+      let options = {
+          filter: {
+              myIndexedParam: [20, 23], myOtherIndexedParam: this.state.account
+          },
+          fromBlock: 0,                  //Number || "earliest" || "pending" || "latest"
+          toBlock: 'latest'
+      };
+      
+      this.state.ElectionInstance.getPastEvents('voterIsVoted', options).then((result) => {
+        for(let i = 0; i < result.length; i++) {
+          this.state.eventVoters.push({
+            candidateId: result[i].returnValues._candidateId,
+            voterAddress: result[i].returnValues._voterAddress
+          })
+        }
+        this.setState({eventVoters: this.state.eventVoters})
+      })
+      
+      
+      // this.state.ElectionInstance.events.voterIsVoted({
+      //   filter: {myIndexedParam: [20, 23], myOtherIndexedParam: this.state.account},
+      //   fromBlock: 0
+      // }).on('data', (e) => {
+      //   this.state.eventVoters.concat({
+      //     candidateId: e.returnValues._candidateId,
+      //     voterAddress: e.returnValues._voterAddress
+      //   })
+        
+      // })
+      // this.setState({eventVoters: this.state.eventVoters})     
+      
+      
+      // console.log(this.state.eventVoters)
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
@@ -141,6 +180,7 @@ export default class Voting extends Component {
   };
 
   renderCandidates = (candidate) => {
+    
     const castVote = async (id) => {
       await this.state.ElectionInstance.methods
         .vote(id)
@@ -155,13 +195,17 @@ export default class Voting extends Component {
         castVote(id);
       }
     };
+    
+    // console.log(this.state.eventVoters)
     return (
       <div className="container-item d-flex p-2" style={{justifyContent: 'space-around'}}>
         <div className="candidate-info">
           <h2>
-          <small>#{candidate.id}</small> {candidate.name} <strong className="text-success">{candidate.voteCount}</strong>
+            <small>#{candidate.id}</small> {candidate.name} <strong className="text-success">{candidate.voteCount}</strong>
           </h2>
-          
+          <div>
+            
+          </div>
         </div>
         <div className="vote-btn-container">
           <button
@@ -178,7 +222,21 @@ export default class Voting extends Component {
     );
   };
 
+  LoopEvent = (event, key) => {
+    return (
+      // <div className="d-flex bd-highlight">
+      //   <p className="p-2 flex-fill bd-highlight">{event.candidateId}</p>
+      //   <p className="p-2 flex-fill bd-highlight">{event.voterAddress}</p>
+      // </div>
+      <tr>
+        <th>{event.candidateId}</th>
+        <th>{event.voterAddress}</th>
+      </tr>
+    )
+  }
+
   render() {
+    
     if (!this.state.web3) {
       return (
         <>
@@ -277,6 +335,15 @@ export default class Voting extends Component {
               </div>
             </>
           ) : null}
+          <table>
+            <tr>
+              <th>Candidate ID</th>
+              <th>Voter Address</th>
+            </tr>
+            {this.state.eventVoters.map(this.LoopEvent)}
+          </table>
+          
+          
         </div>
       </>
     );

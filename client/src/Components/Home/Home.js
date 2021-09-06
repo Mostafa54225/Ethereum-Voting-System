@@ -74,6 +74,8 @@ const Home = () => {
         if(account[0] === admins[i].adminAddress) setIsSubAdmin(true)
       }
       
+      const getTransactionCount = await web3.eth.getTransactionCount(account[0])
+      console.log(getTransactionCount)
       
     }
   }
@@ -94,6 +96,7 @@ const Home = () => {
     window.location.reload()
   }
 
+  
   
   if(!web3) {
     return (

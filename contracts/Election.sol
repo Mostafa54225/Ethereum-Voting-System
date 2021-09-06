@@ -96,6 +96,8 @@ contract Election {
         uint isVerfied;
         bool isRegistered;
     }
+    event voterIsVoted(address indexed _voterAddress, uint256 _candidateId);
+    
     address[] public voters;
 
     mapping(address => Voter) public voterDetails;
@@ -120,13 +122,14 @@ contract Election {
         voterDetails[_voterAddress].isVerfied = _verifyStatus;
     }
     
-    function vote (uint256 candidateId) external {
+    function vote (uint256 _candidateId) external {
         require(!voted[msg.sender]);
         require(voterDetails[msg.sender].isVerfied == 1);
         require(start);
         require(!end);
-        candidates[candidateId].voteCount++;    
+        candidates[_candidateId].voteCount++;    
         voted[msg.sender] = true;
+        emit voterIsVoted(msg.sender, _candidateId);
     }
     
     function endElection() external onlyAdmin {

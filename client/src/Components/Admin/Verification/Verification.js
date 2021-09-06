@@ -7,8 +7,6 @@ import AdminOnly from '../AdminOnly'
 import getWeb3 from '../../../getWeb3'
 import Electionabi from '../../../contracts/Election.json'
 
-import './Verification.css'
-
 export default class Verification extends Component {
   constructor(props) {
     super(props)
@@ -55,9 +53,9 @@ export default class Verification extends Component {
           isRegistered: voter.isRegistered,
           voted: voted
         })
-        this.setState({voters: this.state.voters})
-
       }
+      this.setState({voters: this.state.voters})
+      
       
     } catch (error) {
       console.error(error)
@@ -73,7 +71,6 @@ export default class Verification extends Component {
 
       window.location.reload()
     }
-    console.log(voter.voted)
     return (
       <>
         <div>
