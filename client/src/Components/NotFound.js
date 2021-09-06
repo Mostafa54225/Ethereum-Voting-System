@@ -11,7 +11,7 @@ const NotFound = () => {
           <br />
           Go to{" "}
           <Link
-            to="/"
+            to={process.env.PUBLIC_URL + "/"}
             style={{ color: "black", textDecoration: "underline" }}
           >
             Home

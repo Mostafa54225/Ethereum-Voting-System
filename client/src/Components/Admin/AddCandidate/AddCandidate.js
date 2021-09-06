@@ -22,10 +22,10 @@ const AddCandidate = () => {
   const[admins, setAdmins] = useState([])
 
   useEffect(() => {
-    if (!window.location.hash) {
-      window.location = window.location + "#loaded";
-      window.location.reload();
-    }
+    // if (!window.location.hash) {
+    //   window.location = window.location + "#loaded";
+    //   window.location.reload();
+    // }
     loadContracts()
   })
   const loadContracts = async () => {

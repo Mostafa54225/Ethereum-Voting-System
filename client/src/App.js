@@ -13,7 +13,7 @@ import NotFound from './Components/NotFound';
 function App() {
   return (
     <div className="App">
-      <Router>
+      <Router basename={process.env.PUBLIC_URL}>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/AddCandidate" component={AddCandidate} />

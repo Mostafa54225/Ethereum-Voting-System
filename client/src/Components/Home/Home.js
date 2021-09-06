@@ -26,10 +26,7 @@ const Home = () => {
   const[isSubAdmin, setIsSubAdmin] = useState(false)
 
   useEffect(() => {
-    if (!window.location.hash) {
-      window.location = window.location + "#loaded";
-      window.location.reload();
-    }
+    
     loadContract()
   })
 

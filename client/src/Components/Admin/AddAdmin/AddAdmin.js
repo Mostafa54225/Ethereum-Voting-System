@@ -19,10 +19,10 @@ const AddCandidate = () => {
   const[admins, setAdmins] = useState([])
   const[adminAddress, setAdminAddress] = useState("")
   useEffect(() => {
-    if (!window.location.hash) {
-      window.location = window.location + "#loaded";
-      window.location.reload();
-    }
+    // if (!window.location.hash) {
+    //   window.location = window.location + "#loaded";
+    //   window.location.reload();
+    // }
     loadContracts()
 
   }, )

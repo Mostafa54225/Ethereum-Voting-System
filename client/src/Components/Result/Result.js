@@ -33,10 +33,10 @@ export default class Result extends Component {
     };
   }
   componentDidMount = async () => {
-    if (!window.location.hash) {
-      window.location = window.location + "#loaded";
-      window.location.reload();
-    }
+    // if (!window.location.hash) {
+    //   window.location = window.location + "#loaded";
+    //   window.location.reload();
+    // }
     try {
       const web3 = await getWeb3();
       const accounts = await web3.eth.getAccounts();
