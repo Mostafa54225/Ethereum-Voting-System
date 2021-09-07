@@ -131,12 +131,12 @@ const Home = () => {
             <center>
               <h3 className="text-center">The Election ended.</h3>
               <br />
-              <Link
-                to="/Result"
+              <a
+                href={process.env.PUBLIC_URL +"#/Result"}
                 style={{ color: "black", textDecoration: "underline" }}
               >
                 See results
-              </Link>
+              </a>
             </center>
           </div>
         </>
