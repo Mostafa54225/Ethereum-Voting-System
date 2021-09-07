@@ -260,7 +260,7 @@ export default class Voting extends Component {
                         <h3 className="text-center">You've casted your vote.</h3>
                         <center>
                           <a
-                            href="#/Result"
+                            href={process.env.PUBLIC_URL +"#/Result"}
                             style={{
                               color: "black",
                               textDecoration: "underline",
@@ -288,7 +288,7 @@ export default class Voting extends Component {
                       <h3>You're not registered. Please register first.</h3>
                       <br />
                       <a
-                        href="#/Registration"
+                        href={process.env.PUBLIC_URL +"#/Registration"}
                         style={{ color: "black", textDecoration: "underline", fontSize: '20px' }}
                       >
                         Registration Page
@@ -324,7 +324,7 @@ export default class Voting extends Component {
                 <center>
                   <br />
                   <a
-                    href="#/Result"
+                    href={process.env.PUBLIC_URL +"#/Result"}
                     style={{ color: "black", textDecoration: "underline" }}
                   >
                     See results
