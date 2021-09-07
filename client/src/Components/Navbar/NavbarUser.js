@@ -25,16 +25,16 @@ const NavbarUser = () => {
   return (
     <header className="header">
         <nav className="navbar">
-            <a href="/" className="nav-logo">Home.</a>
+            <a href={process.env.PUBLIC_URL + "#/"} className="nav-logo">Home.</a>
             <ul className="nav-menu">
                 <li className="nav-item">
-                    <a href="#/Registration" className="nav-link">Registration</a>
+                    <a href={process.env.PUBLIC_URL +"#/Registration"} className="nav-link">Registration</a>
                 </li>
                 <li className="nav-item">
                     <a href={process.env.PUBLIC_URL + "#/Voting"} className="nav-link">Voting</a>
                 </li>
                 <li className="nav-item">
-                    <a href="#/Result" className="nav-link">Result</a>
+                    <a href={process.env.PUBLIC_URL +"#/Result"} className="nav-link">Result</a>
                 </li>
             </ul>
             <div className="hamburger" onClick={mobileMenu}>

@@ -340,8 +340,6 @@ export default class Voting extends Component {
             </tr>
             {this.state.eventVoters.map(this.LoopEvent)}
           </table>
-          
-          
         </div>
       </>
     );
